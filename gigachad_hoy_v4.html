@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Hoy Como">
+<title>Hoy Como — GigaChad</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#080808;
+  --card:#131313;
+  --card2:#1a1a1a;
+  --border:#2a2a2a;
+  --text:#f5f0e8;
+  --sub:#aaa;
+  --muted:#555;
+  --gym:#d4ff5c;
+  --rest:#74b3ff;
+  --lunch:#ffad30;
+  --dinner:#c9a8ff;
+  --accent:#d4ff5c;
+}
+html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body{min-height:100dvh}
+.wrap{display:flex;flex-direction:column;padding:0 0 40px}
+
+/* TOP */
+.top{display:flex;justify-content:space-between;align-items:center;padding:22px 20px 0}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:5px;color:var(--accent)}
+.daybadge{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text);padding:5px 13px;border:1.5px solid var(--border);border-radius:20px}
+
+/* HERO */
+.hero{padding:20px 20px 0}
+.bigdate{font-family:'Bebas Neue',sans-serif;font-size:88px;line-height:.85;color:var(--text)}
+.bigdate span{color:var(--accent)}
+.gymtag{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.gymtag.gym{background:rgba(212,255,92,.15);color:var(--gym);border:1.5px solid rgba(212,255,92,.3)}
+.gymtag.rest{background:rgba(116,179,255,.15);color:var(--rest);border:1.5px solid rgba(116,179,255,.3)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 2s infinite}
+
+/* DIVIDER */
+.div{height:1px;background:var(--border);margin:20px 20px 0}
+
+/* SECTION LABEL */
+.sec{display:flex;align-items:center;gap:12px;padding:22px 20px 0}
+.sec-lbl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--sub);white-space:nowrap}
+.sec-line{flex:1;height:1px;background:var(--border)}
+
+/* MEAL CARDS — today */
+.meals{padding:12px 20px 0}
+.mcard{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:10px}
+.mlabel{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.mlabel.l{color:var(--lunch)}.mlabel.d{color:var(--dinner)}
+.mtitle{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:.5px;line-height:1;margin-bottom:8px;color:var(--text)}
+.mdetail{font-size:13.5px;font-weight:400;color:var(--sub);line-height:1.55}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.tag{font-size:10px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:8px;background:var(--card2);color:#888;border:1px solid var(--border)}
+
+/* MACROS */
+.macros{display:flex;gap:8px;padding:10px 20px 0}
+.mpill{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 6px;text-align:center}
+.mval{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px}
+.mname{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.mpill.hc .mval{color:var(--lunch)}.mpill.pr .mval{color:var(--gym)}.mpill.gr .mval{color:var(--rest)}
+
+/* NOTE */
+.note{margin:10px 20px 0;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start}
+.nicon{font-size:16px;flex-shrink:0;margin-top:1px}
+.ntext{font-size:13px;font-weight:400;color:var(--sub);line-height:1.5}
+.ntext strong{color:var(--text);font-weight:600}
+
+/* TOMORROW — distinct dimmed style */
+.tmr-wrap{margin:0 20px 0;background:#0f0f0f;border:1px solid #1e1e1e;border-radius:16px;padding:16px;margin-top:12px}
+.tmr-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.tmr-day{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:#555}
+.tmr-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.tmr-tag.gym{background:rgba(212,255,92,.07);color:#7a9a35;border:1px solid rgba(212,255,92,.12)}
+.tmr-tag.rest{background:rgba(116,179,255,.07);color:#4a7aaa;border:1px solid rgba(116,179,255,.12)}
+.tmr-row{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid #1a1a1a}
+.tmr-row:last-child{border-bottom:none;padding-bottom:0}
+.tmr-ico{font-size:12px;flex-shrink:0;width:20px}
+.tmr-content{}
+.tmr-lbl{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#3a3a3a;margin-bottom:3px}
+.tmr-lbl.l{color:#6a4510}.tmr-lbl.d{color:#4a3870}
+.tmr-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.5px;color:#555;line-height:1}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="logo">GIGACHAD</div>
+    <div class="daybadge" id="db"></div>
+  </div>
+
+  <div class="hero">
+    <div class="bigdate" id="bd"></div>
+    <div class="gymtag" id="gt"><div class="dot"></div><span id="gtt"></span></div>
+  </div>
+  <div class="div"></div>
+
+  <div class="sec"><span class="sec-lbl">Hoy</span><div class="sec-line"></div></div>
+  <div class="meals" id="mc"></div>
+  <div class="macros" id="mx"></div>
+  <div class="note" id="nt"></div>
+
+  <div class="sec"><span class="sec-lbl">Mañana</span><div class="sec-line"></div></div>
+  <div class="tmr-wrap">
+    <div class="tmr-head">
+      <div class="tmr-day" id="tmr-day"></div>
+      <div class="tmr-tag" id="tgt"><div class="dot"></div><span id="tgtt"></span></div>
+    </div>
+    <div id="tmc"></div>
+  </div>
+
+</div>
+<script>
+const DN=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const MN=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const P={
+  1:{lunch:{t:"Bowl de Ametller",d:"Tu combo fijo de lunes. Alt: ensalada de lentejas con canónigos y atún.",tags:["legumbre o cereal","proteína","verdura"]},dinner:{t:"Verdura + Huevo",d:"Gazpacho o ensalada verde + 2 huevos (revuelto, poche o tortilla).",tags:["verdura cruda","proteína"]},gym:true,note:"Día de piernas 🦵 Carga bien los hidratos en la comida."},
+  2:{lunch:{t:"Legumbre + Pescado",d:"Ensalada de lentejas o garbanzos con atún. O brotes con pollo.",tags:["legumbre","proteína","verdura cruda"]},dinner:{t:"Pescado Blanco + Verdura",d:"Merluza o dorada a la plancha + ensalada o verdura al vapor.",tags:["pescado blanco","verdura cocida"]},gym:false,note:"Día de descanso — cena ligera, sin hidratos obligatorios."},
+  3:{lunch:{t:"Cereal + Pescado Azul",d:"Arroz o pasta integral con verduras + salmón, atún o caballa.",tags:["cereal integral","pescado azul","verdura"]},dinner:{t:"Carne Blanca + Verdura",d:"Pechuga de pollo a la plancha o pavo con verduras salteadas.",tags:["carne blanca","verdura"]},gym:true,note:"Día de pecho/hombros 💪 Máxima carga de hidratos en la comida."},
+  4:{lunch:{t:"Legumbre + Carne Blanca",d:"Ensalada de pasta o quinoa con verduras y pavo. O tabulé.",tags:["legumbre o cereal","carne blanca","verdura"]},dinner:{t:"Huevo + Verdura",d:"Revuelto de ajetes o tortilla con tomate aliñado.",tags:["huevo x2","verdura cruda"]},gym:false,note:"Día de descanso — hidratación clave hoy 💧"},
+  5:{lunch:{t:"Cereal + Carne Blanca",d:"Arroz salvaje con verduras y pollo al limón. O pasta con atún.",tags:["cereal","proteína","verdura cocida"]},dinner:{t:"Pescado Azul + Verdura",d:"Salmón al horno con verduras o caballa al papillote.",tags:["pescado azul","verdura al horno"]},gym:true,note:"Día de espalda/bíceps 🏋️ Última sesión de la semana."},
+  6:{lunch:{t:"Carne Roja — Libre",d:"El único día de carne roja. Bistec o hamburguesa de calidad.",tags:["carne roja","patata o ensalada"]},dinner:{t:"Cena Libre 🎉",d:"Sábado es tuyo. Pizza casera, cena fuera, sin culpa.",tags:["libre"]},gym:false,note:"Weekend — disfruta pero no olvides el agua 💧"},
+  0:{lunch:{t:"Pescado Blanco + Patata",d:"Lubina al horno con zanahoria y cebolla + patata.",tags:["pescado blanco","patata","verdura al horno"]},dinner:{t:"Carne Blanca + Verdura",d:"Muslitos de pollo al horno con brochetas de verdura.",tags:["carne blanca","verdura"]},gym:false,note:"Mañana toca piernas 🦵 Duerme bien esta noche."}
+};
+const MG={hc:"200g",pr:"140g",gr:"55g"};
+const MR={hc:"140g",pr:"130g",gr:"55g"};
+const now=new Date(),dow=now.getDay(),tdow=(dow+1)%7,pl=P[dow],tpl=P[tdow];
+const tags=t=>t.map(x=>`<span class="tag">${x}</span>`).join('');
+
+// HOY
+document.getElementById('db').textContent=DN[dow].toUpperCase();
+document.getElementById('bd').innerHTML=`${now.getDate()}<span> ${MN[now.getMonth()].substring(0,3).toUpperCase()}</span>`;
+const gt=document.getElementById('gt');
+gt.className='gymtag '+(pl.gym?'gym':'rest');
+document.getElementById('gtt').textContent=pl.gym?'Día de Gym':'Día de Descanso';
+
+document.getElementById('mc').innerHTML=`
+<div class="mcard">
+  <div class="mlabel l">☀️ Comida</div>
+  <div class="mtitle">${pl.lunch.t}</div>
+  <div class="mdetail">${pl.lunch.d}</div>
+  <div class="tags">${tags(pl.lunch.tags)}</div>
+</div>
+<div class="mcard">
+  <div class="mlabel d">🌙 Cena</div>
+  <div class="mtitle">${pl.dinner.t}</div>
+  <div class="mdetail">${pl.dinner.d}</div>
+  <div class="tags">${tags(pl.dinner.tags)}</div>
+</div>`;
+
+const m=pl.gym?MG:MR;
+document.getElementById('mx').innerHTML=`
+<div class="mpill hc"><div class="mval">${m.hc}</div><div class="mname">Hidratos</div></div>
+<div class="mpill pr"><div class="mval">${m.pr}</div><div class="mname">Proteína</div></div>
+<div class="mpill gr"><div class="mval">${m.gr}</div><div class="mname">Grasa</div></div>`;
+
+document.getElementById('nt').innerHTML=`<div class="nicon">💡</div><div class="ntext"><strong>${pl.gym?'Hoy es gym':'Hoy descansas'}.</strong> ${pl.note}</div>`;
+
+// MAÑANA
+document.getElementById('tmr-day').textContent=DN[tdow].toUpperCase();
+const tgt=document.getElementById('tgt');
+tgt.className='tmr-tag '+(tpl.gym?'gym':'rest');
+document.getElementById('tgtt').textContent=tpl.gym?'🏋️ Gym':'😴 Descanso';
+
+document.getElementById('tmc').innerHTML=`
+<div class="tmr-row">
+  <div class="tmr-ico">☀️</div>
+  <div class="tmr-content">
+    <div class="tmr-lbl l">Comida</div>
+    <div class="tmr-title">${tpl.lunch.t}</div>
+  </div>
+</div>
+<div class="tmr-row">
+  <div class="tmr-ico">🌙</div>
+  <div class="tmr-content">
+    <div class="tmr-lbl d">Cena</div>
+    <div class="tmr-title">${tpl.dinner.t}</div>
+  </div>
+</div>`;
+</script>
+</body>
+</html>
